@@ -1,0 +1,25 @@
+
+
+if (! function_exists('decodeEnvDB')) {
+    /**
+     * Gets the value of an environment variable.
+     * @return array
+     */
+    function decodeEnvDB() : array {
+        $connectionNames = explode(",", get_env("DB_CONNECTIONS"));
+        $connections = [];
+        foreach ($connectionNames as $connectionName) {
+            $connectionNameUp = strtoupper($connectionName);
+            $connections[$connectionName] = [
+                "driver" => get_env($connectionNameUp."_DRIVER"),
+                "host" => get_env($connectionNameUp."_HOST"),
+                "port" => get_env($connectionNameUp."_PORT"),
+                "database" => get_env($connectionNameUp."_DATABASE"),
+                "username" => get_env($connectionNameUp."_USERNAME"),
+                "password" => get_env($connectionNameUp."_PASSWORD"),
+                "emulate_prepared_statements" => get_env($connectionNameUp."_EMULATE", true),
+            ];
+        }
+        return $connections;
+    }
+}
