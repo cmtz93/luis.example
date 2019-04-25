@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
+use App\Http\Requests\Vehicle as Validator;
 
 class VehicleController extends Controller
 {
@@ -21,12 +21,12 @@ class VehicleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Validator $request
      * @return \Illuminate\Http\Response
      */
-    public function store( $request)
+    public function store(Validator $request)
     {
-        $data = $request->all();
+        $data = $request->validated();
         $vehicle = Vehicle::create($data);
         return response()->json(["data" => $vehicle], Response::HTTP_CREATED);
     }
@@ -45,13 +45,13 @@ class VehicleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Validator $request
      * @param  \App\Vehicle  $vehicle
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vehicle $vehicle)
+    public function update(Validator $request, Vehicle $vehicle)
     {
-        $vehicle->fill($request->all())->save();
+        $vehicle->fill($request->validated())->save();
         return response()->json(["data" => $vehicle]);
     }
 
