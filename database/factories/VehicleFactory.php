@@ -7,9 +7,9 @@ use Faker\Generator as Faker;
 
 $factory->define(Vehicle::class, function (Faker $faker) {
     return [
-        "plate" => $faker->->regexify('[A-Z0-9]{7,10}'),
+        "plate" => $faker->unique()->regexify('[A-Z0-9]{7,10}'),
         "color" => $faker->colorName,
-        "serial" => $faker->regexify('[A-Z0-9]{30}')->unique(),
+        "serial" => $faker->unique()->regexify('[A-Z0-9]{30}'),
         "year" => $faker->numberBetween(2000, 2019),
     ];
 });
